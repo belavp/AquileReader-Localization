@@ -1,0 +1,26 @@
+function handleFileSelect(evt) {
+    if ( !(evt.target && evt.target.files && evt.target.files[0]) ) {
+        return;
+    }
+
+    Papa.parse(evt.target.files[0], {
+        header: true,
+        dynamicTyping: true,
+        encoding: "UTF-8",
+        before: function(file, inputElem)
+        {
+            console.log(file);
+            // executed before parsing each file begins;
+            // what you return here controls the flow
+        },
+        error: function(err, file, inputElem, reason)
+        {
+            console.log(err);
+            // executed if an error occurs while loading the file,
+            // or if before callback aborted for some reason
+        },
+        complete: function (results) {
+            renderDataSet(results);
+        }
+    });
+}
